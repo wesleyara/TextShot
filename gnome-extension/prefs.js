@@ -416,7 +416,11 @@ class OcrPage {
             margin_bottom: 12,
             valign: Gtk.Align.START,
         });
-        const spinner = new Adw.Spinner({width_request: 32, height_request: 32, margin_top: 48});
+        // Adw.Spinner só existe a partir do libadwaita 1.6 (GNOME 47)
+        const spinner = Adw.Spinner
+            ? new Adw.Spinner({width_request: 32, height_request: 32, margin_top: 48})
+            : new Gtk.Spinner({spinning: true, width_request: 32, height_request: 32, margin_top: 48,
+                halign: Gtk.Align.CENTER, valign: Gtk.Align.START});
         const stack = new Gtk.Stack();
         stack.add_named(spinner, 'loading');
         stack.add_named(new Gtk.ScrolledWindow({
@@ -534,10 +538,10 @@ class OcrPage {
 const STORAGE_CSS = `
 .te-bar { border-radius: 6px; background-color: alpha(currentColor, 0.1); min-height: 12px; }
 .te-dot { border-radius: 999px; min-width: 12px; min-height: 12px; }
-.te-ext { background-color: var(--accent-bg-color); }
-.te-engine { background-color: var(--success-bg-color); }
-.te-langs { background-color: var(--warning-bg-color); }
-.te-data { background-color: var(--error-bg-color); }
+.te-ext { background-color: @accent_bg_color; }
+.te-engine { background-color: @success_bg_color; }
+.te-langs { background-color: @warning_bg_color; }
+.te-data { background-color: @error_bg_color; }
 `;
 
 function dot(kind) {

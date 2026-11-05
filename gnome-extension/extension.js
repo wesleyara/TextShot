@@ -55,9 +55,13 @@ class AreaSelector {
             });
 
             Main.uiGroup.add_child(this._actor);
-            try {
+            if (this._actor.set_cursor_type) {
                 this._actor.set_cursor_type(Clutter.CursorType.CROSSHAIR);
-            } catch {}
+            } else {
+                // GNOME 47 e anteriores
+                global.display.set_cursor(Meta.Cursor.CROSSHAIR);
+                this._legacyCursor = true;
+            }
 
             this._grab = Main.pushModal(this._actor, {actionMode: Shell.ActionMode.POPUP});
             this._actor.grab_key_focus();
@@ -119,6 +123,8 @@ class AreaSelector {
             Main.popModal(this._grab);
             this._grab = null;
         }
+        if (this._legacyCursor)
+            global.display.set_cursor(Meta.Cursor.DEFAULT);
         this._actor.destroy();
         this._actor = null;
         const resolve = this._resolve;
