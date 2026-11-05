@@ -19,7 +19,7 @@
 
 ## Requirements
 
-- GNOME Shell 50
+- GNOME Shell 46, 47, 48, 49 or 50 (see [Compatibility](#compatibility))
 - Tesseract. The extension offers to install it on first use (via PackageKit) on:
   - Debian / Ubuntu and derivatives
   - Fedora and derivatives
@@ -107,6 +107,21 @@ Interface language, keyboard shortcut (click the row and press the new combinati
 
 Total disk usage with a breakdown: extension files, OCR engine packages, each language model and the saved history (with a **Clear** button).
 
+## Compatibility
+
+Every supported version was tested on a real GNOME Shell (`make compat-test`): the extension enables without errors, selecting a text area copies the exact recognized text, the top bar menu opens and all settings pages render.
+
+| GNOME Shell | Tested on | Result |
+| --- | --- | --- |
+| 50 | Ubuntu 26.04 | ✅ |
+| 49 | Fedora 43 (49.10) | ✅ |
+| 48 | Fedora 42 (48.8) | ✅ |
+| 47 | Fedora 41 (47.10) | ✅ |
+| 46 | Ubuntu 24.04 LTS (46.0) | ✅ |
+| 45 or older | | ❌ Not supported (different notification and settings APIs) |
+
+Popular distributions by GNOME version: Ubuntu 24.04 LTS (46), Ubuntu 24.10 (47), Ubuntu 25.04 and Debian 13 (48), Fedora 41 (47), 42 (48), 43 (49).
+
 ## Tips
 
 - For a single field or line (a code, an e-mail), set **Text layout → Single line**
@@ -125,6 +140,7 @@ make screenshots  # regenerate the settings screenshots (general, ocr, storage�
 make shell-screenshots  # regenerate selection/menu/notification in an isolated headless GNOME Shell
 make pack         # build dist/textshot@wesleyara.shell-extension.zip
 make test         # release helper tests
+make compat-test  # run the extension on GNOME 46-49 in containers (needs Docker)
 make uninstall
 ```
 
