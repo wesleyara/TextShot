@@ -4,6 +4,11 @@ All notable changes to TextShot. The project follows [semantic versioning](https
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-11-05
+
+### Added
+- support GNOME Shell 46 to 49
+
 ## [1.0.0] - 2026-11-05
 
 ### Added
