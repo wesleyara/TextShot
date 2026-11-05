@@ -2,8 +2,8 @@
   "uuid": "textshot@wesleyara",
   "name": "TextShot",
   "description": "Select an area of the screen, extract its text with OCR (tesseract) and copy it to the clipboard. Inspired by the Text Extractor from Microsoft PowerToys.",
-  "shell-version": ["50"],
+  "shell-version": ["46", "47", "48", "49", "50"],
   "url": "https://github.com/wesleyara/TextShot",
   "settings-schema": "org.gnome.shell.extensions.textshot",
-  "version-name": "1.0.0"
+  "version-name": "1.1.0"
 }

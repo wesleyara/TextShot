@@ -19,7 +19,7 @@
 
 ## Requisitos
 
-- GNOME Shell 50
+- GNOME Shell 46, 47, 48, 49 ou 50 (veja [Compatibilidade](#compatibilidade))
 - Tesseract. A extensão oferece a instalação no primeiro uso (via PackageKit) em:
   - Debian / Ubuntu e derivados
   - Fedora e derivados
@@ -110,6 +110,21 @@ Idioma da interface (o padrão é inglês), atalho de teclado (clique na linha e
 ![Configurações: Armazenamento](docs/screenshots/storage.png)
 
 Uso total em disco, dividido em: arquivos da extensão, pacotes do motor de OCR, cada modelo de idioma e o histórico salvo (com botão **Limpar**).
+
+## Compatibilidade
+
+Cada versão suportada foi testada num GNOME Shell real (`make compat-test`): a extensão ativa sem erros, selecionar uma área copia exatamente o texto reconhecido, o menu do painel abre e todas as páginas de configurações aparecem.
+
+| GNOME Shell | Testado em | Resultado |
+| --- | --- | --- |
+| 50 | Ubuntu 26.04 | ✅ |
+| 49 | Fedora 43 (49.10) | ✅ |
+| 48 | Fedora 42 (48.8) | ✅ |
+| 47 | Fedora 41 (47.10) | ✅ |
+| 46 | Ubuntu 24.04 LTS (46.0) | ✅ |
+| 45 ou anterior | | ❌ Não suportado (APIs de notificação e de configurações diferentes) |
+
+Distribuições populares por versão do GNOME: Ubuntu 24.04 LTS (46), Ubuntu 24.10 (47), Ubuntu 25.04 e Debian 13 (48), Fedora 41 (47), 42 (48), 43 (49).
 
 ## Dicas
 

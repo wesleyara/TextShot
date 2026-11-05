@@ -48,6 +48,23 @@ class Shots {
         return path;
     }
 
+    /** Mostra um texto grande no centro da tela (usado pelo teste de compatibilidade). */
+    showText(text) {
+        Main.overview.hide();
+        this._label?.destroy();
+        this._label = new St.Label({
+            text,
+            style: 'font-size: 40px; color: black; background-color: white; padding: 40px 60px;',
+        });
+        Main.layoutManager.uiGroup.add_child(this._label);
+        this._label.set_position(200, 200);
+        return new Promise(resolve => GLib.timeout_add(GLib.PRIORITY_DEFAULT, 500, () => {
+            const [w, h] = this._label.get_transformed_size();
+            resolve({x: 200, y: 200, width: Math.round(w), height: Math.round(h)});
+            return GLib.SOURCE_REMOVE;
+        }));
+    }
+
     async menu(path) {
         const ind = this.ext()._indicator;
         ind.menu.open(BoxPointer.PopupAnimation.NONE);
@@ -67,7 +84,8 @@ class Shots {
     }
 
     async selection(path, x1, y1, x2, y2, copiedPath) {
-        const seat = global.stage.get_context().get_backend().get_default_seat();
+        const seat = global.stage.get_context?.().get_backend().get_default_seat() ??
+            Clutter.get_default_backend().get_default_seat();
         const dev = seat.create_virtual_device(Clutter.InputDeviceType.POINTER_DEVICE);
         const now = () => GLib.get_monotonic_time();
 

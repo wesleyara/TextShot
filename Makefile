@@ -3,7 +3,7 @@ SRC     := gnome-extension
 DIST    := dist
 ZIP     := $(DIST)/$(UUID).shell-extension.zip
 
-.PHONY: all pack check test version release-patch release-minor release-major release-dry-run hooks install enable disable prefs uninstall nested log screenshots shell-screenshots clean
+.PHONY: all pack check test compat-test version release-patch release-minor release-major release-dry-run hooks install enable disable prefs uninstall nested log screenshots shell-screenshots clean
 
 all: pack
 
@@ -53,6 +53,10 @@ shell-screenshots: pack
 
 test:
 	node --test tests/*.test.mjs
+
+# roda a extensão num GNOME Shell real das versões 46-49 em containers (precisa de Docker)
+compat-test:
+	for t in ubuntu:24.04 41 42 43; do tools/compat-test.sh $$t || exit 1; done
 
 version:
 	@node scripts/version.mjs
