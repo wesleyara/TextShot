@@ -9,7 +9,7 @@ Passo a passo para publicar e atualizar o TextShot no [extensions.gnome.org](htt
 | Schema | `org.gnome.shell.extensions.textshot` |
 | Repositório | https://github.com/wesleyara/TextShot |
 | Licença | GPL-2.0-or-later |
-| GNOME suportado | 50 |
+| GNOME suportado | 46, 47, 48, 49, 50 |
 | Versão atual | `make version` (o `version-name` do `metadata.json`) |
 
 ---
@@ -122,10 +122,26 @@ Respostas prontas, caso o revisor questione algo:
 ### Nova versão do GNOME (a cada ~6 meses: 51, 52…)
 
 1. Teste na versão nova (Fedora sai primeiro com ela, ou use uma VM)
-2. Adicione o número em `shell-version` no `metadata.json`, por exemplo `["50", "51"]`. Não adicione versões que ainda não foram lançadas
+2. Adicione o número em `shell-version` no `metadata.json`, por exemplo `[..., "50", "51"]`. Não adicione versões que ainda não foram lançadas
 3. Envie como uma atualização normal
 
-Para suportar o GNOME 48/49, teste nessas versões antes de adicioná-las (o código usa APIs do Shell 50, como `set_cursor_type`).
+### Teste de compatibilidade
+
+`make compat-test` roda a extensão num GNOME Shell real (headless, sem tela) dentro de containers Docker: Ubuntu 24.04 (46), Fedora 41 (47), 42 (48) e 43 (49). Para uma versão só: `tools/compat-test.sh 43` ou `tools/compat-test.sh ubuntu:24.04`. Para cada uma, ele verifica:
+
+- a extensão ativa sem erros
+- a seleção de uma área com texto copia exatamente o texto reconhecido (OCR de ponta a ponta)
+- o menu do painel abre
+- a janela de configurações renderiza as páginas General, OCR e Storage e o diálogo de idiomas
+
+As capturas e logs ficam em `dist/compat/<versão>/`. Cada versão baixa cerca de 1 GB de pacotes na primeira vez.
+
+Pontos de compatibilidade no código:
+
+- `Clutter.Actor.set_cursor_type` só existe no GNOME 48+; no 46/47 o cursor usa `global.display.set_cursor`
+- `Adw.Spinner` só existe no libadwaita 1.6 (GNOME 47+); no 46 usa `Gtk.Spinner`
+- as cores da página Storage usam `@accent_bg_color` e afins, que funcionam no libadwaita 1.5 e nas versões novas
+- o GNOME 45 e anteriores não são suportados: a API de notificações (`MessageTray.Source`/`Notification`) e o libadwaita 1.4 são diferentes
 
 ## 6. Regras do EGO que já seguimos
 
