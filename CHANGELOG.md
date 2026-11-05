@@ -4,6 +4,8 @@ All notable changes to TextShot. The project follows [semantic versioning](https
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-11-05
+
 ### Added
 - **capture:** select an area with Super+Shift+T (configurable), recognize its text with Tesseract and copy it to the clipboard
 - **capture:** works on Wayland and X11 without a screenshot permission prompt; Esc or right click cancels
