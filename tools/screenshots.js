@@ -11,7 +11,7 @@ import Gtk from 'gi://Gtk?version=4.0';
 const ROOT = GLib.path_get_dirname(GLib.path_get_dirname(
     GLib.filename_from_uri(import.meta.url)[0]));
 const SRC = GLib.build_filenamev([ROOT, 'gnome-extension']);
-const OUT = GLib.build_filenamev([ROOT, 'docs', 'screenshots']);
+const OUT = GLib.getenv('TEXTSHOT_SHOTS_DIR') || GLib.build_filenamev([ROOT, 'docs', 'screenshots']);
 const SCHEMA_ID = 'org.gnome.shell.extensions.textshot';
 const LANG = ARGV[0] ?? 'en';
 
@@ -73,7 +73,7 @@ function save(window, file) {
     const node = snapshot.to_node();
     const texture = window.get_native().get_renderer().render_texture(node, null);
     texture.save_to_png(`${OUT}/${file}`);
-    print(`docs/screenshots/${file}`);
+    print(`${OUT}/${file}`);
 }
 
 const app = new Adw.Application({application_id: 'io.github.wesleyara.TextShot.Screenshots'});
