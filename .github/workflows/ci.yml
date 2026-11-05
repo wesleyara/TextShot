@@ -1,0 +1,25 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version-file: .nvmrc }
+      - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libglib2.0-bin zip
+      - name: Schema
+        run: glib-compile-schemas --strict --dry-run gnome-extension/schemas
+      - name: JavaScript syntax
+        run: for f in gnome-extension/*.js scripts/*.mjs; do node --check --input-type=module < "$f"; done
+      - name: Translations
+        run: python3 tools/check_translations.py
+      - name: Release helpers and metadata
+        run: node --test tests/*.test.mjs
+      - name: Pack
+        run: scripts/pack.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: textshot-extension
+          path: dist/*.shell-extension.zip
+          retention-days: 14

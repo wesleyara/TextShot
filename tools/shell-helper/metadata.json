@@ -1,0 +1,6 @@
+{
+  "uuid": "screenshot-helper@textshot.dev",
+  "name": "TextShot screenshot helper (dev only)",
+  "description": "Used by tools/shell-screenshots.sh inside an isolated nested GNOME Shell. Never install it in a real session.",
+  "shell-version": ["50"]
+}

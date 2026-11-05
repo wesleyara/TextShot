@@ -1,0 +1,37 @@
+name: Release
+# Merging develop into main publishes the GitHub release of the version in gnome-extension/metadata.json,
+# with the extension zip attached. The tag itself is created locally by `make release-patch|minor|major` on develop.
+# Uploading the zip to extensions.gnome.org is manual (https://extensions.gnome.org/upload/).
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version-file: .nvmrc }
+      - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends zip
+      - name: Publish the release of the tagged version
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version="$(node scripts/version.mjs)"
+          tag="v${version}"
+          if gh release view "$tag" >/dev/null 2>&1; then
+            echo "Release $tag already exists, nothing to do."
+            exit 0
+          fi
+          if ! git rev-parse -q --verify "refs/tags/${tag}" >/dev/null; then
+            echo "::error::Tag ${tag} does not exist. Run make release-patch|minor|major on develop first."
+            exit 1
+          fi
+          git checkout "$tag"
+          scripts/pack.sh
+          node scripts/changelog-notes.mjs "$version" > "$RUNNER_TEMP/notes.md"
+          gh release create "$tag" --verify-tag --title "TextShot $version" --notes-file "$RUNNER_TEMP/notes.md" \
+            dist/*.shell-extension.zip

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.textshot" path="/org/gnome/shell/extensions/textshot/">
+    <key name="extract-shortcut" type="as">
+      <default><![CDATA[['<Super><Shift>t']]]></default>
+      <summary>Shortcut to extract text</summary>
+    </key>
+    <key name="languages" type="s">
+      <default>'por+eng'</default>
+      <summary>Tesseract languages in priority order (e.g. por+eng)</summary>
+    </key>
+    <key name="psm" type="i">
+      <default>6</default>
+      <summary>Tesseract page segmentation mode</summary>
+    </key>
+    <key name="upscale" type="b">
+      <default>true</default>
+      <summary>Upscale small selections before OCR</summary>
+    </key>
+    <key name="join-lines" type="b">
+      <default>false</default>
+      <summary>Join all lines into one</summary>
+    </key>
+    <key name="show-notification" type="b">
+      <default>true</default>
+      <summary>Show a notification after copying</summary>
+    </key>
+    <key name="show-indicator" type="b">
+      <default>true</default>
+      <summary>Show icon in the top bar</summary>
+    </key>
+    <key name="history-size" type="i">
+      <default>10</default>
+      <summary>Number of history items</summary>
+    </key>
+    <key name="history" type="as">
+      <default>[]</default>
+      <summary>History of extracted text</summary>
+    </key>
+    <key name="ui-language" type="s">
+      <choices>
+        <choice value="system"/>
+        <choice value="en"/>
+        <choice value="pt_BR"/>
+        <choice value="es"/>
+        <choice value="de"/>
+        <choice value="it"/>
+        <choice value="zh_CN"/>
+      </choices>
+      <default>'en'</default>
+      <summary>Interface language ('system' follows the system language)</summary>
+    </key>
+    <key name="tesseract-path" type="s">
+      <default>'tesseract'</default>
+      <summary>Path to the tesseract executable</summary>
+    </key>
+  </schema>
+</schemalist>

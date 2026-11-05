@@ -1,0 +1,14 @@
+.textshot-overlay {
+  background-color: rgba(0, 0, 0, 0.30);
+}
+.textshot-band {
+  border: 2px solid #3584e4;
+  background-color: rgba(53, 132, 228, 0.18);
+}
+.textshot-hint {
+  background-color: rgba(30, 30, 30, 0.85);
+  color: #ffffff;
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-weight: bold;
+}
